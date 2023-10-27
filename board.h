@@ -1,23 +1,23 @@
 #include <vector>
 #include <array>
+#include "move.h"
 
 #ifndef BOARD_H
 #define BOARD_H
 
-struct move {
-  // index in bitboard array of piece being moved
-  short pieceType;
-  // index in bitboard array of piece being taken, -1 if square is empty
-  short takenPiece = -1;
-  // origin of piece
-  unsigned long long startSquare;
-  // location piece is moved to
-  unsigned long long endSquare;
+// struct move {
+//   // index in bitboard array of piece being moved
+//   short pieceType;
+//   // index in bitboard array of piece being taken, -1 if square is empty
+//   short takenPiece = -1;
+//   // origin of piece
+//   unsigned long long startSquare;
+//   // location piece is moved to
+//   unsigned long long endSquare;
 
-  bool operator==(const move& lhs, const move& rhs) {
-    return lhs.pieceType == rhs.pieceType && lhs.takenPiece == rhs.takenPiece && lhs.startSquare == rhs.startSquare && lhs.endSquare == rhs.endSquare;
-  }
-}
+//   bool operator==(const move& lhs, const move& rhs) {
+//     return lhs.pieceType == rhs.pieceType && lhs.takenPiece == rhs.takenPiece && lhs.startSquare == rhs.startSquare && lhs.endSquare == rhs.endSquare;
+//   }
 
 class board {
 
@@ -42,14 +42,14 @@ class board {
     std::array<unsigned short, 64> wpressure;
 
     // current list of legal moves, updated whenever state is changed
-    vector<move> legalMoves;
+    std::vector<move> legalMoves;
 
 
   public:
     // initializes board to starting chess position
-    void board();
+    board();
     // initializes board with fen string
-    void board(const char &fen);
+    board(const char &fen);
     // returns board
     std::array<unsigned long long, 12> getBitboard();
     // returns black pressure
@@ -60,8 +60,12 @@ class board {
     std::vector<move> getLegalMoves();
     // makes a move given by move parameter, returns exception if move is not in legalMoves
     // updates legalMoves and flips turn bit
+    // updates pressure based on piece that is moved
     // forced param forces move to be made regardless of if it is legal, default is false
-    void move(const move& pos, bool forced = false);
+    // if forced is enabled, calculates pressure for entire board
+    void makeMove(const move& pos, bool forced = false);
+    // calculates pressure for the board
+    void calculatePressure();
 
 };
 
