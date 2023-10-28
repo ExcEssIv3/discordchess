@@ -49,6 +49,14 @@ std::array<unsigned long long, 12> board::getBitboard() {
     return bitboard;
 }
 
+unsigned long long board::getBlackPieceSquares() {
+    return bitboard[6] | bitboard[7] | bitboard[8] | bitboard[9] | bitboard[10] | bitboard[11];
+}
+
+unsigned long long board::getWhitePieceSquares() {
+    return bitboard[0] | bitboard[1] | bitboard[2] | bitboard[3] | bitboard[4] | bitboard[5];
+}
+
 std::array<unsigned short, 64> board::getBPressure() {
     return bpressure;
 }
