@@ -61,8 +61,13 @@ std::vector<move> board::getLegalMoves() {
     return legalMoves;
 }
 
+// TODO: implement forced functionality after getLegalMoves is implemented
 void board::makeMove(const move &pos, bool forced) {
-    return;
+    // subtracting start position and adding end position to piece being moved
+    // this functions as moving the piece, as the bit in the start position is changed to zero representing an empty square, and bit in the end position is one, representing a full square
+    bitboard[pos.getPieceType()] = bitboard[pos.getPieceType()] - pos.getStartSquare() + pos.getEndSquare();
+    // subtracting end position from taken piece if taken piece is not zero, prevents two pieces from being in the same square
+    if (pos.getTakenPiece() >= 0) bitboard[pos.getTakenPiece()] -= pos.getEndSquare();
 }
 
 void board::calculatePressure() {
