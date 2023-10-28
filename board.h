@@ -52,6 +52,10 @@ class board {
     board(const char &fen);
     // returns board
     std::array<unsigned long long, 12> getBitboard();
+    // returns combined black bitboard
+    unsigned long long getBlackPieceSquares();
+    // returns combined white bitboard
+    unsigned long long getWhitePieceSquares();
     // returns black pressure
     std::array<unsigned short, 64> getBPressure();
     // returns white pressure
